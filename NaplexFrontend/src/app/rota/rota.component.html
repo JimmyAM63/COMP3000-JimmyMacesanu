@@ -1,0 +1,124 @@
+<div class="container-fluid mt-2">
+  <h2>Rota</h2>
+  <p>You must contact your lead via "Staff" section for any queries.</p>
+</div>
+
+<div class="store-buttons">
+  <button *ngFor="let store of stores" (click)="onStoreSelect(store)">
+    {{ store.storeName }}
+  </button>
+</div>
+
+<div class="rota-container">
+
+  <!-- Employee Sidebar Toggle -->
+  <div class="employee-sidebar-toggle" (click)="toggleEmployeeSidebar()">
+    <i class="fas fa-chevron-right" *ngIf="!employeeSidebarVisible"></i>
+    <i class="fas fa-chevron-down" *ngIf="employeeSidebarVisible"></i>
+    <span>Employees</span>
+  </div>
+
+  <!-- Employee Sidebar -->
+  <div class="employee-sidebar" *ngIf="employeeSidebarVisible">
+    <ul>
+      <li *ngFor="let staff of staffList" (click)="selectEmployee(staff)">
+        {{ staff?.firstName }} {{ staff?.lastName }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Rota Table and Navigation -->
+  <div class="rota-main">
+    <div class="rota-table-container">
+
+      <div class="edit-mode-container" *ngIf="isAdmin$ | async">
+        <button class="edit-mode-toggle" (click)="toggleEditMode()">
+          <i class="fas fa-edit"></i> Edit Mode
+        </button>
+      </div>
+
+      <!-- Navigation Arrows and Month Display -->
+      <div class="month-navigation">
+        <button (click)="changeMonth(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="month-name">{{ currentDate | date:'MMMM yyyy' }}</div>
+        <button (click)="changeMonth(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- One Table Per Week -->
+      <ng-container *ngFor="let week of weeksOfMonth">
+        <table class="rota-table">
+          <thead>
+            <tr>
+              <th>Staff</th>
+              <ng-container *ngFor="let day of week">
+                <th>
+                  {{ day }}
+                  <br>
+                  {{ getDayLabel(day) }}
+                </th>
+              </ng-container>
+              <th>Hours Worked</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let staff of staffList">
+              <td *ngIf="staff">{{ staff.firstName }} {{ staff.lastName }}</td>
+              <ng-container *ngFor="let day of week">
+                <td cdkDropList (cdkDropListDropped)="assignShift($event, staff, day)" [class.day-off]="!getShiftForDay(staff, day)"
+                  [ngClass]="{'annual-leave': getShiftForDay(staff, day)?.isLeave}">
+
+                  <!-- Display "Holiday" with red background if it's annual leave -->
+                  <ng-container *ngIf="getShiftForDay(staff, day)?.isLeave">
+                    <div class="holiday-cell">
+                      <span class="holiday-text">Holiday</span>
+                    </div>
+                  </ng-container>
+                  
+                  <!-- Display the formatted shift times if it's not annual leave -->
+                  <ng-container *ngIf="getShiftForDay(staff, day) && !getShiftForDay(staff, day)?.isLeave">
+                    {{ getShiftForDay(staff, day)?.start | date:'shortTime' }} - {{ getShiftForDay(staff, day)?.end | date:'shortTime' }}
+                  </ng-container>
+
+                  <ng-container *ngIf="isEditMode && !getShiftForDay(staff, day) && (!currentlyEditing.staffId || (currentlyEditing.staffId === staff.id && currentlyEditing.day === day))">
+                    <!-- Add Shift Icon -->
+                    <i class="fa fa-plus-circle" aria-hidden="true" (click)="addShift(staff, day)" title="Add Shift"></i>
+                  </ng-container>
+
+                  <ng-container *ngIf="isEditMode">
+                    <!-- Display the bin icon for deleting the shift if it exists -->
+                    <i *ngIf="getShiftForDay(staff, day)" class="fa fa-trash" aria-hidden="true" (click)="getShiftForDay(staff, day) && removeShift(getShiftForDay(staff, day)!)" title="Remove Shift"></i>
+
+
+
+                    <!-- Text boxes when editing -->
+                    <ng-container *ngIf="currentlyEditing.staffId === staff.id && currentlyEditing.day === day">
+                      <div class="input-with-icon">
+                        <span class="clock-icon">🕒</span>
+                        <input class="rounded-input" [(ngModel)]="tempStartShift" placeholder="9:00">
+                      </div>
+                      <br>
+                      <div class="input-with-icon">
+                        <span class="clock-icon">🕒</span>
+                        <input class="rounded-input" [(ngModel)]="tempEndShift" placeholder="18:00">
+                      </div>
+                      <br>
+                      <mat-icon (click)="setAnnualLeave(staff, day)">flight_takeoff</mat-icon>
+                      <mat-icon (click)="confirmShift(staff, day, tempStartShift, tempEndShift)">check</mat-icon>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </ng-container>
+              <td>{{ getTotalHoursWorkedForWeek(staff, week) }} Hours</td>
+            </tr>
+          </tbody>
+        </table>
+        <br> <!-- Spacing between weeks -->
+      </ng-container>
+    </div>
+  </div>
+</div>

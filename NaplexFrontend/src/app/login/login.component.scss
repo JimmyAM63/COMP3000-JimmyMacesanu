@@ -1,0 +1,144 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Introducing a neutral font */
+  background-color: #333; /* Unchanged */
+}
+
+.outer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loginContainer {
+  background: linear-gradient(135deg, rgb(236, 233, 230, 0.5), rgb(255, 255, 255, 0.5));
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.loginContainer h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 2.5em; // Make it stand out
+  color: #333;
+  margin-bottom: 30px; // Extra space below the title
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+
+  &.has-content .icon {
+    opacity: 0.2;
+    left: 20px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 40px 10px 40px;
+    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    font-size: 16px;
+    transition: background 0.4s, border-color 0.4s;
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-color: rgba(51, 51, 51, 0.3);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba(51, 51, 51, 0.5);
+    }
+
+    &:focus + .icon {
+      opacity: 0.2;
+      left: 20px;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translateY(-50%) translateX(-50%);
+    opacity: 0.6;
+    transition: opacity 0.4s, left 0.4s;
+  }
+}
+
+
+.btn-primary {
+  background-color: #333; // Matching with the background
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 5px 10px rgba(51, 51, 51, 0.1);
+  &:hover {
+    box-shadow: 0 7px 14px rgba(51, 51, 51, 0.15);
+  }
+}
+
+.help-links {
+  margin-top: 20px;
+  font-size: 14px;
+
+  a {
+    color: #777;
+    text-decoration: underline;
+
+    &:hover {
+      color: #555;
+    }
+  }
+}
+
+.vanta {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+.loading-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; // To stack the message and spinner vertically
+  font-size: 1.5em;
+  color: #333;
+  z-index: 9999; // This ensures that the loading message and spinner are above other content
+}
+
+.spinner {
+  margin-top: 20px;
+  border: 8px solid rgba(255, 0, 0, 0.3); 
+  border-radius: 50%;
+  border-top: 8px solid #333;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

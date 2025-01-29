@@ -1,0 +1,26 @@
+<div id="vanta" class="vanta"></div>
+<app-notification [show]="showNotification" [message]="notificationMessage"></app-notification>
+
+<div *ngIf="!isLoadingDashboard" class="outer-container">
+  <div class="loginContainer">
+    <h2>Naplex</h2>
+    <form (ngSubmit)="onLogin()">
+      <div class="form-group" [class.has-content]="username.length > 0">
+        <input type="text" name="username" [(ngModel)]="username" placeholder="" (ngModelChange)="checkContent()">
+        <i class="fas fa-user icon"></i>
+      </div>
+      <div class="form-group" [class.has-content]="password.length > 0">
+        <input type="password" name="password" [(ngModel)]="password" placeholder="" (ngModelChange)="checkContent()">
+        <i class="fas fa-lock icon"></i>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="isLoadingDashboard" class="loading-dashboard">
+    <h2>Naplex Digital Communications</h2>
+    <div class="spinner"></div>
+</div>

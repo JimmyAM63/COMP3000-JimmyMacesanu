@@ -1,0 +1,33 @@
+<div class="container-fluid mt-2">
+  <h2>Staff</h2>
+  <p>Get in touch with your colleagues and leads with a few clicks.</p>
+  <p>In case of an emergency, please reach out to your administrators directly.</p>
+</div>
+
+<div class="container-fluid mt-2" *ngFor="let store of stores">
+  <h2>{{ store }}</h2>
+
+  <table class="staff-table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Rank</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let staff of getStaffByStore(store)">
+        <td>{{ staff.firstName }}</td>
+        <td>{{ staff.lastName }}</td>
+        <td>{{ staff.role }}</td>
+        <td><a href="mailto:{{ staff.email }}" target="_blank" class="email-button">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+</div>

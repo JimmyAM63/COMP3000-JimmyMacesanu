@@ -1,0 +1,68 @@
+<div class="container-fluid mt-2">
+  <h2>Settings</h2>
+  <p>Your account settings can be modified in this section.</p>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="form">
+      <!-- Cards Container -->
+      <div class="cards-container">
+          <!-- Account Info Card -->
+          <div class="card-flip">
+              <div class="card">
+                  <div class="front">
+                      <h3>Account Info</h3>
+                  </div>
+                  <div class="back">
+                      <h3>Account Info</h3>
+                      <div class="form-group">
+                          <label>First Name:</label>
+                          <input type="text" class="form-control" formControlName="firstName">
+                      </div>
+                      <div class="form-group">
+                          <label>Last Name:</label>
+                          <input type="text" class="form-control" formControlName="lastName">
+                      </div>
+                      <div class="form-group">
+                          <label>Phone Number:</label>
+                          <input type="text" class="form-control" formControlName="phoneNumber" placeholder="+447711223344">
+                      </div>
+                      <div class="form-group">
+                        <label>Email Address:</label>
+                        <input type="email" class="form-control" formControlName="email"> <!-- renamed from 'personalEmail' -->
+                    </div>
+                        <div class="form-group">
+                            <label>Home Address:</label>
+                            <textarea class="form-control" formControlName="address"></textarea> <!-- renamed from 'homeAddress' -->
+                        </div>
+                      <br>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+              </div>
+          </div>
+          <!-- Payroll Card -->
+          <div class="card-flip">
+              <div class="card">
+                  <div class="front">
+                      <h3>Payroll Details</h3>
+                  </div>
+                  <div class="back">
+                      <h3>Payroll Details</h3>
+                      <div class="form-group">
+                          <label>Sortcode:</label>
+                          <input type="text" class="form-control" formControlName="sortcode">
+                      </div>
+                      <div class="form-group">
+                          <label>Account Number:</label>
+                          <input type="text" class="form-control" formControlName="accountNumber">
+                      </div>
+                      <div class="form-group">
+                          <label>Name on the Card:</label>
+                          <input type="text" class="form-control" formControlName="nameOnCard">
+                      </div>
+                      <br>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>

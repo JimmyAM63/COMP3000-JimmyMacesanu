@@ -1,0 +1,13 @@
+<div class="modal-backdrop" *ngIf="isVisible">
+    <div class="modal-content">
+      <div class="modal-title">Select Store for Duplication</div>
+  
+      <div class="store-options">
+        <button *ngFor="let store of stores" (click)="selectStore(store)">{{ store }}</button>
+      </div>
+  
+      <div class="modal-buttons">
+        <button class="cancel" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>

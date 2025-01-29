@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ZNM4QEddmoyt2q6342TMQFmUyCTf4tTRg14HG2xtOjs=",
+  "Source": "NaplexAPI",
+  "BasePath": "_content/NaplexAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

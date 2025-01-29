@@ -1,0 +1,73 @@
+$menu-font: 'Roboto', sans-serif;
+
+.menu-container {
+  z-index: 100;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 24px;
+
+  .trigger-area {
+    position: relative; 
+    cursor: pointer;
+    
+    &:hover .menu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0s; // apply immediately
+    }
+
+    .arrow {
+      font-size: 24px;
+      color: rgba(255, 0, 0, 0.8); 
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .menu {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: transform 0.3s, opacity 0.3s, visibility 0s 0.3s; // Added delay for visibility
+      background-color: rgba(255, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      font-family: $menu-font;
+      font-size: 16px;
+      color: #fff;
+      width: 200px;
+      position: absolute;
+      top: 30px; 
+      right: 0;
+
+      .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .greeting {
+          font-weight: bold;
+          margin: 0;
+        }
+
+        .logout-btn {
+          padding: 5px 10px;
+          margin: 0;
+        }
+      }
+
+      .role {
+        margin-top: 15px;
+        font-style: italic;
+        font-size: 14px;
+      }
+    }
+  }
+}

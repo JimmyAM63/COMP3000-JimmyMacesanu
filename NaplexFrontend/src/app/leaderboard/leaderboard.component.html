@@ -1,0 +1,49 @@
+<div class="container-fluid mt-2">
+  <h2 class="">Leaderboard</h2>
+  <p class="">Top member based on the net revenue.</p>
+</div>
+
+<div class="container-fluid mt-2 leaderboard">
+  <h4>Displaying the ranking for {{ selectedDate }}</h4>
+  <div class="">
+    <p>If you want to go back for a previous leaderboard, select the date below:</p>
+    <input type="date" id="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateSelect($event)" placeholder="Select a date" name="date" required>
+  </div>
+  <br>
+  <br>
+  <table id="leaderboardTable" class="leaderboard-table">
+    <thead>
+      <tr>
+        <th class="resizable" (mousedown)="startResizing($event)">Ranking</th>
+        <th class="resizable" (mousedown)="startResizing($event)">Name</th>
+        <th class="resizable" (mousedown)="startResizing($event)">Revenue</th>
+        <th class="resizable" (mousedown)="startResizing($event)">New</th>
+        <th class="resizable" (mousedown)="startResizing($event)">Upgrade</th>
+        <th class="resizable" (mousedown)="startResizing($event)">Unlimited</th>
+        <th class="resizable" (mousedown)="startResizing($event)">HBB</th>
+        <th class="resizable" (mousedown)="startResizing($event)">HBBup</th>
+        <th class="resizable" (mousedown)="startResizing($event)">Add</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="leaderboardData.length; else noData">
+        <tr *ngFor="let advisor of leaderboardData; let i = index" [ngClass]="{'gold': i === 0, 'silver': i === 1, 'bronze': i === 2}">
+          <td [ngStyle]="{'font-weight': i < 3 ? 'bold' : 'normal', 'font-size': i < 3 ? '1.3em' : 'inherit'}">{{i + 1}}</td>
+          <td>{{advisor.name}}</td>
+          <td>{{advisor.revenue | currency:'GBP':'symbol':'1.2-2'}}</td>
+          <td>{{advisor.new}}</td>
+          <td>{{advisor.upgrade}}</td>
+          <td>{{advisor.unlimited}}</td>
+          <td>{{advisor.hbb}}</td>
+          <td>{{advisor.hbbup}}</td>
+          <td>{{advisor.additional}}</td>
+        </tr>
+      </ng-container>
+      <ng-template #noData>
+        <tr>
+          <td colspan="6">No data available</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

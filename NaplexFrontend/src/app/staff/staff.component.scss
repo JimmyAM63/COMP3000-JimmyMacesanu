@@ -1,0 +1,43 @@
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255, 0.3);
+  }
+  
+  .staff-table th,
+  .staff-table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: center;
+  }
+  
+  .staff-table th {
+    background-color: rgb(255, 0, 0, 0.7);
+    color: black;
+  }
+  
+  .staff-table tr:hover {
+    background-color: #ddd;   
+  }
+
+  .email-button { 
+    text-align: center;
+  justify-content: center; /* Horizontal centering */
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgb(255, 0, 0, 0.7);; /* Adjust as needed */
+    font-size: 18px; /* Adjust size as needed */
+    padding: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s;
+  }
+  
+  .email-button:hover {
+    color: #ffffff; /* Darker shade for hover */
+  }
+
+  

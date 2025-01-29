@@ -1,0 +1,290 @@
+/* Full SCSS for the sales component styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.container-fluid {
+  height: 100vh; // Ensure full viewport height
+  overflow: hidden;
+}
+
+.sales-dashboard {
+  padding: 2em;
+  background: #fafafa;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; // Display elements in a column
+  align-items: center; // Center align elements horizontally
+  justify-content: flex-start; // Align the form to the left
+  margin-right: 300px; // Space for the sidebar
+
+  h2 {
+    color: #e74c3c; // Deep red color for the main heading
+    margin-bottom: 1em;
+  }
+}
+
+.sales-entry {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  max-width: 700px; // Limit the form width
+  overflow-y: auto; /* Make it scrollable */
+
+  .sales-form {
+    form {
+      display: flex;
+      flex-direction: grid;
+      gap: 15px;
+
+      .form-group, .checkbox-group, .input-group {
+        margin-bottom: 1em;
+
+        label {
+          display: block;
+          margin-bottom: 0.5em;
+          color: #333;
+          font-size: 1.1em;
+        }
+
+        h3 {
+          text-align: center;
+          text-decoration: dashed underline;
+          text-transform: uppercase;
+          font-size: 1.2rem;
+          word-spacing: 5px;
+        }
+
+        input[type="checkbox"] {
+          margin-right: 0.5em;
+        }
+
+        input, select {
+          width: 100%;
+          padding: 0.5em;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          font-size: 1em;
+
+          &:hover {
+            border-color: #e74c3c; // Red border on hover
+          }
+
+          &:focus {
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); // Red shadow on focus
+          }
+        }
+
+        input[type="text"] {
+          width: 100%;
+          padding: 0.5em;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+          &:hover {
+            border-color: #e74c3c; // Red border on hover
+          }
+
+          &:focus {
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); // Red shadow on focus
+          }
+        }
+      }
+    }
+  }
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #bf3e30;
+  }
+}
+
+/* Sidebar History Section */
+.history-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100vh;
+  background: #2c3e50;
+  color: white;
+  padding: 2em;
+  border-left: 6px solid #e74c3c;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-title {
+    font-size: 1.5em;
+    margin-bottom: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .history-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    .card {
+      position: relative;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      margin-bottom: 15px;
+
+      /* Creating a header within the card */
+      .card-header {
+        height: 30px;
+        background: #e0e0e0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding: 5px 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .close {
+          font-size: 20px;
+          position: absolute;
+          left: 83%;
+          font-weight: bold;
+          color: rgb(255, 255, 255);
+          background-color: rgb(255, 0, 0, 0.8);
+          border: thin solid rgba(255, 255, 255, 0.8);
+          border-radius: 15%;
+          line-height: 18px;
+          text-align: center;
+          width: 41px;
+          height: 31px;
+          padding: 0;
+          cursor: pointer;
+          transition: color 0.2s ease-in-out;
+
+          &:hover {
+            font-size: 26px;
+            transform: scale(1.3);
+            background-color: rgb(255, 255, 255);
+            color: rgb(255, 0, 0, 0.8);
+            border: thin solid rgba(255, 0, 0, 0.8);
+          }
+        }
+      }
+
+      .card-content {
+        padding: 15px;
+
+        p {
+          margin: 0 0 10px;
+        }
+      }
+    }
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+
+  /* Modal content */
+  .modal-content {
+    position: relative;
+    background-color: #f44336;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 70%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    h4 {
+      color: white;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+
+        &.btn-no {
+          background-color: #c6c3c3;
+
+          &:hover {
+            background-color: #ff7300;
+          }
+        }
+
+        &.btn-yes {
+          background-color: rgb(180, 28, 28);
+
+          &:hover {
+            background-color: #ff7300;
+          }
+        }
+      }
+    }
+  }
+
+  /* Add animation */
+  @keyframes animatetop {
+    from {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+// Media query for smaller screens
+@media screen and (max-width: 768px) {
+  .container-fluid {
+    margin: 0;
+  }
+
+  .sales-dashboard {
+    margin-right: 0; // Remove the margin for smaller screens
+  }
+}

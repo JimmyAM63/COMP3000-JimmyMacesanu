@@ -1,0 +1,149 @@
+.registration-container {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+
+    .dropdown-section {
+        margin-bottom: 20px;
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            &:focus {
+                border-color: red;
+                box-shadow: 0 0 8px rgba(220,20,60,0.6);
+            }
+        }
+    }
+
+    .dropdown-section-promote {
+        border-radius: 20px;
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            &:focus {
+                border-color: red;
+                box-shadow: 0 0 8px rgba(220,20,60,0.6);
+            }
+        }
+    }
+
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    
+    .input-group-icon {
+        flex: 0.15; // This gives some space for the icon
+        color: red;
+        margin-right: 15px; // Space between icon and input
+    }
+    
+    input, select {
+        flex: 0.85; // Consume the remaining space, making the input smaller
+        padding: 8px 15px;
+        border-radius: 25px;
+        border: 2px solid #ccc;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        outline: none;
+        
+        &:focus {
+            border-color: red;
+            box-shadow: 0 0 8px rgba(220,20,60,0.6);
+        }
+    }
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #d12a2a;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: #a92020;
+    }
+}
+
+h2 {
+    cursor: pointer;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h2:hover {
+    text-decoration: underline;
+}
+
+i.fa {
+    transition: transform 0.3s ease;
+}
+
+table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        thead {
+            background-color: #ff0000;
+            color: white;
+            th {
+                padding: 10px 20px;
+                border-bottom: 2px solid #ff0000;
+            }
+        }
+
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                &:hover {
+                    background-color: #e6e6e6;
+                }
+
+                td {
+                    padding: 10px 20px;
+                }
+
+                // Special styling for the Remove button
+                button {
+                    background-color: #ff0000;
+                    padding: 5px 15px;
+                    border-radius: 3px;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: #8a1818;
+                    }
+                }
+            }
+        }
+    }

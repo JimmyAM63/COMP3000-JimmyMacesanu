@@ -1,0 +1,16 @@
+<div class="menu-container" *ngIf="showMenu && !isLoginPage">
+  <div class="trigger-area">
+    <i class="fa fa-bars arrow" aria-hidden="true"></i>
+    <div class="menu">
+      <div class="menu-header">
+        <span class="greeting">Hello, {{ firstName }}</span>
+        <button (click)="logout()" class="btn btn-danger logout-btn">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="role">
+        Logged in as {{ userRole }}
+      </div>
+    </div>
+  </div>
+</div>

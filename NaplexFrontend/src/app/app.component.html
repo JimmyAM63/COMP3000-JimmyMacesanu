@@ -1,0 +1,8 @@
+<router-outlet></router-outlet>
+<div id="vanta" class="vanta">
+
+</div>
+
+<app-menu *ngIf="showMenu"></app-menu>
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+<app-body [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-body>

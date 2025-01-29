@@ -1,0 +1,176 @@
+<app-notification [show]="showNotification" [message]="notificationMessage"></app-notification>
+
+
+<div class="registration-container">
+    <h2 (click)="toggleAddEmployeeForm()" @slideDownAnimation>
+        Add Employee 
+        <i [ngClass]="showAddEmployeeForm ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+    </h2>
+    
+    <div *ngIf="showAddEmployeeForm" @slideDownAnimation>
+        <form [formGroup]="registrationForm" (submit)="registerEmployee()">
+            <br>
+            <div class="input-group">
+                <span class="fa fa-user input-group-icon"></span>
+                <input type="text" placeholder="Username" formControlName="userName">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-address-card input-group-icon"></span>
+                <input type="text" placeholder="First Name" formControlName="firstName">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-address-card input-group-icon"></span>
+                <input type="text" placeholder="Last Name" formControlName="lastName">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-envelope input-group-icon"></span>
+                <input type="email" placeholder="Email" formControlName="email">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-phone input-group-icon"></span>
+                <input type="phone" placeholder="Phone Number" formControlName="phoneNumber">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-lock input-group-icon"></span>
+                <input type="password" placeholder="Password" formControlName="password">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-lock input-group-icon"></span>
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+              </div>
+              <div class="input-group">
+                <span class="fa fa-briefcase input-group-icon"></span>
+                <select formControlName="role">
+                  <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <span class="fa fa-building input-group-icon"></span>
+                <select formControlName="storeId">
+                  <option *ngFor="let store of stores" [value]="store.id">{{store.name}}</option>
+                </select>
+              </div>
+
+            <button type="submit">Add</button>
+
+        </form>
+    </div>
+</div>
+
+<div class="registration-container remove-employee-container" @slideDownAnimation>
+  <h2 (click)="toggleRemoveEmployeeForm()" >
+      Remove Employee 
+      <i [ngClass]="showRemoveEmployeeForm ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+  </h2>
+  
+  <div *ngIf="showRemoveEmployeeForm" @slideDownAnimation>
+      <div class="dropdown-section">
+        <label for="storeDropdown">Select Store:</label>
+        <select id="storeDropdown" [(ngModel)]="selectedStore" (change)="onStoreChange()">
+          <option *ngFor="let store of stores" [value]="store.id">{{store.name}}</option>
+        </select>
+      </div>
+      
+      <table>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{employee.firstName}}</td>
+              <td>{{employee.lastName}}</td>
+              <td>{{employee.role}}</td>
+              <td><button (click)="removeEmployee(employee)">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+
+<div class="registration-container lend-staff-container" @slideDownAnimation>
+  <h2 (click)="toggleLendStaffForm()">
+      Lend Staff 
+      <i [ngClass]="showLendStaffForm ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+  </h2>
+  
+  <div *ngIf="showLendStaffForm" @slideDownAnimation>
+      <div class="dropdown-section">
+        <label for="lendStoreDropdownFrom">From:   </label>
+        <select id="lendStoreDropdownFrom" [(ngModel)]="selectedLendStoreFrom" (change)="onLendStoreChangeFrom()">
+          <option *ngFor="let store of stores" [value]="store.id">{{store.name}}</option>
+        </select>
+        <label for="lendStoreDropdownTo">    To:</label>
+        <select id="lendStoreDropdownTo" [(ngModel)]="selectedLendStoreTo" (change)="onLendStoreChangeTo()">
+          <option *ngFor="let store of stores" [value]="store.id">{{store.name}}</option>
+        </select>
+      </div>
+      
+      <table>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{employee.firstName}}</td>
+              <td>{{employee.lastName}}</td>
+              <td>{{employee.role}}</td>
+              <td><button (click)="lendEmployee(employee)">Lend</button></td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+<div class="registration-container promote-employee-container" @slideDownAnimation>
+  <h2 (click)="togglePromoteEmployeeForm()">
+      Promote Employee 
+      <i [ngClass]="showPromoteEmployeeForm ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+  </h2>
+
+  <div *ngIf="showPromoteEmployeeForm" @slideDownAnimation>
+    <!-- Store Selection for Promotion -->
+    <div class="dropdown-section">
+        <label for="promotionStoreDropdown">Select a Store:</label>
+        <select id="promotionStoreDropdown" [(ngModel)]="selectedPromotionStore" (change)="onPromotionStoreChange()">
+            <option *ngFor="let store of stores" [value]="store.id">{{store.name}}</option>
+        </select>
+    </div>
+    
+    <table *ngIf="employees.length > 0">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Current Rank</th>
+                <th>New Rank</th> <!-- New Column for Promotion Role -->
+                <th>Submit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.firstName}}</td>
+                <td>{{employee.lastName}}</td>
+                <td>{{employee.role}}</td>
+                <td>
+                    <!-- Promotion Role Selection for Each Employee -->
+                    <select class="dropdown-section-promote" [(ngModel)]="selectedPromotionRoles[employee.id]">
+                        <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                    </select>
+                </td>
+                <td>
+                  <button (click)="promoteEmployee(employee)">Promote</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>    
+</div>

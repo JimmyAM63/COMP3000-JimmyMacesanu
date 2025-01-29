@@ -1,0 +1,208 @@
+<div class="container-fluid mt-2">
+  <h2>Targets</h2>
+  <p>View your statistics in realtime.</p>
+
+  <div class="month-navigation">
+    <button class="nav-button" (click)="previousMonth()">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </button>
+    <input type="text" class="month-input" placeholder="Choose a month and year" [(ngModel)]="chosenMonth" readonly>
+    <button class="nav-button" (click)="nextMonth()">
+      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="editSection">
+    <button *ngIf="isAdmin$ | async" (click)="toggleEdit()" class="editButton">
+      <i style="font-size: 50px; cursor: pointer;" class="fa fa-pencil-square" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <!-- Loop through each store -->
+  <div *ngFor="let store of stores">
+    <h3>{{ store.name }}</h3>
+
+    <table class="kpi-table">
+      <thead>
+        <!-- ... (headers remain unchanged) -->
+        <tr>
+          <th>KPI</th>
+          <th colspan="3">New</th>
+          <th colspan="3">TalkMobile</th>
+          <th colspan="3">Upgrade</th>
+          <th colspan="3">HBB</th>
+          <th colspan="3">HBB Upgrade</th>
+          <th colspan="3">Revenue</th>
+          <th colspan="3">Unlimited</th>
+          <th colspan="3">Insurance</th>
+          <th colspan="3">Additional</th>
+          <th colspan="3">HBB vs UPG</th>
+          <th colspan="3">New vs UPG</th>
+          <!-- ... Add more KPI headers -->
+        </tr>
+        <tr>
+          <th>Employee Name</th>
+          <!-- Subheaders for each KPI -->
+          <!-- ... Just replicating the pattern for each KPI -->
+          <ng-container *ngFor="let _ of ['.new', '.talkMobile', '.upgrades', '.hbb', '.hbbup', '.rev', '.unlimited', '.insurance', '.additional', '.hbbvsupg', '.newvsupg']">
+            <th>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+            </th>
+            <th>
+              <i class="fa fa-percent" aria-hidden="true"></i>
+            </th>
+            <th>
+              <i class="fa fa-gbp" aria-hidden="true"></i>
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through each employee of the store -->
+        <tr *ngFor="let employee of store.employees">
+          <td>{{ employee.name }}</td>
+          <!-- Employee KPI data for each KPI -->
+          <td>{{ employee.new.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.new.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.new.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.new.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.new.target">
+          </td>
+
+          <td>{{ employee.talkMobile.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.talkMobile.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.talkMobile.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.talkMobile.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.talkMobile.target">
+          </td>
+
+          <td>{{ employee.upgrades.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.upgrades.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.upgrades.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.upgrades.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.upgrades.target">
+          </td>
+
+          <td>{{ employee.hbb.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.hbb.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.hbb.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.hbb.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.hbb.target">
+          </td>
+
+          <td>{{ employee.hbbup.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.hbbup.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.hbbup.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.hbbup.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.hbbup.target">
+          </td>
+
+          <td>{{ employee.rev.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.rev.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.rev.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.rev.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.rev.target">
+          </td>
+
+          <td>{{ employee.unlimited.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.unlimited.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.unlimited.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.unlimited.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.unlimited.target">
+          </td>
+
+          <td>{{ employee.insurance.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.insurance.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.insurance.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.insurance.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.insurance.target">
+          </td>
+
+          <td>{{ employee.additional.actual }}</td>
+          <td [ngStyle]="{'background-color': +employee.additional.percentage >= 100 ? 'green' : 'red'}">
+            {{ employee.additional.percentage | number: '1.0-0' }}%
+          </td>
+          <td *ngIf="!employee.isEditing">{{ employee.additional.target }}</td>
+          <td *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.additional.target">
+          </td>
+
+          <td>{{ employee.hbbvsupg.actual }}</td>
+          <td>{{ employee.hbbvsupg.percentage }}%</td>
+          <td>{{ employee.hbbvsupg.target }}</td>
+
+          <td>{{ employee.newvsupg.actual }}</td>
+          <td>{{ employee.newvsupg.percentage }}%</td>
+          <td>{{ employee.newvsupg.target }}</td>
+        </tr>
+
+        <!-- Total Row for each store -->
+        <tr class="totals-row">
+          <td>Total for {{ store.name }}</td>
+          <td>{{ getTotalActual('new', store) }}</td>
+          <td>{{ getTotalPercentage('new', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('new', store) }}</td>
+
+          <td>{{ getTotalActual('talkMobile', store) }}</td>
+          <td>{{ getTotalPercentage('talkMobile', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('talkMobile', store) }}</td>
+
+          <td>{{ getTotalActual('upgrades', store) }}</td>
+          <td>{{ getTotalPercentage('upgrades', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('upgrades', store) }}</td>
+
+          <td>{{ getTotalActual('hbb', store) }}</td>
+          <td>{{ getTotalPercentage('hbb', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('hbb', store) }}</td>
+
+          <td>{{ getTotalActual('hbbup', store) }}</td>
+          <td>{{ getTotalPercentage('hbbup', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('hbbup', store) }}</td>
+
+          <td>{{ getTotalActual('rev', store) }}</td>
+          <td>{{ getTotalPercentage('rev', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('rev', store) }}</td>
+
+          <td>{{ getTotalActual('unlimited', store) }}</td>
+          <td>{{ getTotalPercentage('unlimited', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('unlimited', store) }}</td>
+
+          <td>{{ getTotalActual('insurance', store) }}</td>
+          <td>{{ getTotalPercentage('insurance', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('insurance', store) }}</td>
+
+          <td>{{ getTotalActual('additional', store) }}</td>
+          <td>{{ getTotalPercentage('additional', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('additional', store) }}</td>
+
+          <td>{{ getTotalActual('hbbvsupg', store) }}</td>
+          <td>{{ getTotalPercentage('hbbvsupg', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('hbbvsupg', store) }}</td>
+
+          <td>{{ getTotalActual('newvsupg', store) }}</td>
+          <td>{{ getTotalPercentage('newvsupg', store) | number:'1.0-0' }}%</td>
+          <td>{{ getTotalTarget('newvsupg', store) }}</td>
+
+          <!-- ... Similarly for other KPIs. Continue this pattern. -->
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+</div>
