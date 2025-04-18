@@ -149,12 +149,36 @@ namespace NaplexAPI.Services
         public async Task UpdateTarget(int targetId, TargetDTO targetDto)
         {
             var target = await _context.Targets.FindAsync(targetId);
+
             if (target == null)
             {
-                throw new KeyNotFoundException("Target not found.");
+                Console.WriteLine($"[DEBUG] Looking for EmployeeStore: UserId = '{targetDto.UserId}', StoreId = {targetDto.StoreId}");
+
+                var employeeStore = await _context.EmployeeStores
+                    .FirstOrDefaultAsync(es => es.UserId == targetDto.UserId && es.StoreId == targetDto.StoreId);
+
+                if (employeeStore == null)
+                    throw new ArgumentException("Invalid User ID or Store ID.");
+
+                target = new Target
+                {
+                    EmployeeStore = employeeStore,
+                    TargetDate = new DateTime(targetDto.TargetDate.Year, targetDto.TargetDate.Month, 1),
+                    NewAct = 0,
+                    TalkMobileAct = 0,
+                    UpgradesAct = 0,
+                    HBBAct = 0,
+                    HBBUpAct = 0,
+                    RevAct = 0,
+                    UnlimitedAct = 0,
+                    InsuranceAct = 0,
+                    EntertainmentAct = 0,
+                    AdditionalAct = 0
+                };
+                _context.Targets.Add(target);
             }
 
-            // Assuming target month/year shouldn't change. If they should, add those fields here.
+            // Apply requested targets
             target.NewTar = targetDto.NewTar;
             target.TalkMobileTar = targetDto.TalkMobileTar;
             target.UpgradesTar = targetDto.UpgradesTar;

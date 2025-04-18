@@ -106,7 +106,7 @@ namespace NaplexAPI.Services
 
             var target = await _context.Targets
                 .FirstOrDefaultAsync(t => t.EmployeeStore.UserId == sale.EmployeeStore.UserId &&
-                                          t.TargetDate == sale.SaleDate);
+                                          t.TargetDate == firstDayOfMonth);
 
             if (target == null)
             {
@@ -115,7 +115,7 @@ namespace NaplexAPI.Services
                 {
                     // Initialize all properties
                     EmployeeStore = sale.EmployeeStore,
-                    TargetDate = sale.SaleDate,
+                    TargetDate = firstDayOfMonth,
                     NewAct = 0,
                     NewTar = 0,
                     TalkMobileAct = 0,

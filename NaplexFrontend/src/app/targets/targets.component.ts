@@ -89,6 +89,8 @@ export class TargetsComponent implements OnInit {
         this.storeService.getEmployeesByStore(storeData.id).subscribe(employees => {
           storeData.employees = employees.map(employee => this.convertToEmployeeKPI(employee));
           employees.forEach(employee => {
+            console.log(`User for employee ${employee.firstName} ${employee.lastName} → ID:`, employee.id);
+
             if (this.chosenMonth) {
               // Fetch targets by store and month
               this.targetService.getTargetsByStoreAndMonth(storeData.id.toString(), new Date(year, month - 1)).subscribe(storeTargets => {
@@ -165,7 +167,7 @@ export class TargetsComponent implements OnInit {
       newvsupg: { actual: 0, percentage: 0, target: 0 },
       isEditing: false,
       targetId: 0,
-      userId: ''
+      userId: employeeData.id
     };
   }
 
@@ -257,46 +259,56 @@ export class TargetsComponent implements OnInit {
 
   saveEmployeeChanges(store: StoreData, employee: EmployeeKPI) {
     employee.isEditing = false;
-    const targetId = employee.targetId;
-    const userId = employee.userId;
-    const newTar = employee.new.target;
-    const talkMobileTar = employee.talkMobile.target;
-    const additionalTar = employee.additional.target;
-    const upgradesTar = employee.upgrades.target;
-    const hbbTar = employee.hbb.target;
-    const hbbUpTar = employee.hbbup.target;
-    const revTar = employee.rev.target;
-    const unlimitedTar = employee.unlimited.target;
-    const insuranceTar = employee.insurance.target;
-    const storeId = store.id; // Retrieve the storeid from the StoreData object
   
-    if (!this.chosenMonth) return; // Ensure a month is selected
+    const {
+      targetId,
+      userId,
+      new: { target: newTar },
+      talkMobile: { target: talkMobileTar },
+      additional: { target: additionalTar },
+      upgrades: { target: upgradesTar },
+      hbb: { target: hbbTar },
+      hbbup: { target: hbbUpTar },
+      rev: { target: revTar },
+      unlimited: { target: unlimitedTar },
+      insurance: { target: insuranceTar }
+    } = employee;
   
-    // Check if the new target value is greater than 0
-    if (newTar > 0 || talkMobileTar > 0 || additionalTar > 0 || upgradesTar > 0 || hbbTar > 0 || 
-      hbbUpTar > 0 || revTar > 0 || unlimitedTar > 0 || insuranceTar > 0 ) {
-      const year = parseInt(this.chosenMonth.split(' ')[1]);
-      const month = new Date(this.chosenMonth + ' 1').getMonth() + 1;
-      const monthYearStr = `${year}-${('0' + month).slice(-2)}-01`; // Use 01 for the day
+    const storeId = store.id;
+    if (!this.chosenMonth) return;
   
-      if (targetId === 0) {
-        // If targetId is 0, it means there is no existing target for this employee
-        // Create a new target entry
-        this.targetService.createTarget(userId, storeId, monthYearStr, newTar,
-          talkMobileTar, additionalTar, upgradesTar, hbbTar, hbbUpTar, revTar, unlimitedTar, insuranceTar ).subscribe(response => {
-          console.log('New target created:', response);
-          // Call fetchTargets() to refresh the table
-          this.fetchTargets();
-        });
-      } else {
-        // If targetId is not 0, update the existing target
-        this.targetService.updateTarget(targetId, { userId, newTar,
-        talkMobileTar, additionalTar, upgradesTar, hbbTar, hbbUpTar, revTar, unlimitedTar, insuranceTar }).subscribe(response => {
-          console.log('Target updated successfully');
-          // Call fetchTargets() to refresh the table
-          this.fetchTargets();
-        });
-      }
+    const year = parseInt(this.chosenMonth.split(' ')[1]);
+    const month = new Date(this.chosenMonth + ' 1').getMonth() + 1;
+    const monthYearStr = `${year}-${('0' + month).slice(-2)}-01`; // e.g., "2025-04-01"
+  
+    // Only send request if at least one value > 0
+    if (
+      newTar > 0 || talkMobileTar > 0 || additionalTar > 0 || upgradesTar > 0 ||
+      hbbTar > 0 || hbbUpTar > 0 || revTar > 0 || unlimitedTar > 0 || insuranceTar > 0
+    ) {
+      // Unified update call (backend will create if targetId doesn't exist)
+      this.targetService.updateTarget(targetId, {
+        userId,
+        storeId,
+        targetDate: monthYearStr,
+        newTar,
+        talkMobileTar,
+        additionalTar,
+        upgradesTar,
+        hbbTar,
+        hbbUpTar,
+        revTar,
+        unlimitedTar,
+        insuranceTar
+      }).subscribe({
+        next: () => {
+          console.log('Target created or updated successfully');
+          this.fetchTargets(); // Refresh UI
+        },
+        error: err => {
+          console.error('Failed to create/update target:', err);
+        }
+      });
     }
   }
 }
