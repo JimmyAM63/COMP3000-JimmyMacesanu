@@ -23,8 +23,15 @@ namespace NaplexAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RotaDTO>> CreateRota(RotaDTO rotaDto)
         {
-            var newRota = await _rotaService.CreateRotaAsync(rotaDto);
-            return CreatedAtAction(nameof(GetRotaById), new { rotaId = newRota.RotaId }, newRota);
+            try
+            {
+                var newRota = await _rotaService.CreateRotaAsync(rotaDto);
+                return CreatedAtAction(nameof(GetRotaById), new { rotaId = newRota.RotaId }, newRota);
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/rota/{rotaId}

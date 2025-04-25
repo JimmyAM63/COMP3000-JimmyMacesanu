@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NaplexAPI.Models.DTOs; // Adjust based on your actual Sales DTOs namespace
 using NaplexAPI.Services; // Ensure this is where your ISalesService is located
 using System;
@@ -21,9 +22,20 @@ namespace NaplexAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<SaleDTO>> CreateSale([FromBody] SaleDTO saleDto)
         {
-            var userId = User.Identity.Name; // or however you retrieve the user's ID
-            var newSale = await _salesService.CreateSale(saleDto);
-            return CreatedAtAction(nameof(GetSaleById), new { id = newSale.SaleId }, newSale);
+            //var userId = User.Identity.Name; // or however you retrieve the user's ID
+            try
+            {
+                var newSale = await _salesService.CreateSale(saleDto);
+                return CreatedAtAction(nameof(GetSaleById), new { id = newSale.SaleId }, newSale);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("A sale with the same Order Number already exists.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]

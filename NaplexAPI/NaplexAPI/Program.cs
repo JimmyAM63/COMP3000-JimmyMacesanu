@@ -107,16 +107,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 using var scope = app.Services.CreateScope();
 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -129,6 +120,13 @@ foreach (var role in roles)
     {
         await roleManager.CreateAsync(new IdentityRole(role));
     }
+}
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 //app.UseHttpsRedirection();
@@ -162,3 +160,5 @@ public class JsonStringDateTimeConverter : JsonConverter<DateTime>
         writer.WriteStringValue(value.ToString(_dateFormat));
     }
 }
+
+public partial class Program { }

@@ -57,6 +57,10 @@ namespace NaplexAPI.Infrastructure
                 );
 
             modelBuilder.Entity<Sale>()
+                .HasIndex(s => s.OrderNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Sale>()
                 .Property(e => e.SaleTime)
                 .HasConversion(
                     v => v.ToString(@"hh\:mm"),

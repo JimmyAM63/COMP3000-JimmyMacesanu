@@ -29,6 +29,16 @@ namespace NaplexAPI.Services
                 throw new ApplicationException("Invalid UserId or StoreId.");
             }
 
+            bool exists = await _context.ROTAs
+                .Include(r => r.EmployeeStore)
+                .AnyAsync(r =>
+                    r.EmployeeStore.UserId == rotaDto.UserId &&
+                    r.EmployeeStore.StoreId == rotaDto.StoreId &&
+                    r.Date == rotaDto.Date);
+
+            if (exists)
+                throw new ApplicationException("A rota already exists for this user on the selected date.");
+
             // Create new ROTA entity and set its properties from the DTO
             var rota = new ROTA
             {

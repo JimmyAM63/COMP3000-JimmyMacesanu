@@ -17,10 +17,10 @@ namespace NaplexAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "6.0.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -55,7 +55,7 @@ namespace NaplexAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -80,7 +80,7 @@ namespace NaplexAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -179,7 +179,7 @@ namespace NaplexAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RotaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RotaId"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("date");
@@ -210,6 +210,65 @@ namespace NaplexAPI.Migrations
                     b.HasIndex("EmployeeStoreUserId", "EmployeeStoreStoreId");
 
                     b.ToTable("ROTAs");
+                });
+
+            modelBuilder.Entity("NaplexAPI.Models.Entities.Sale", b =>
+                {
+                    b.Property<int>("SaleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleId"), 1L, 1);
+
+                    b.Property<int>("EmployeeStoreStoreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmployeeStoreUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsAdditional")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDiscounted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OrderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Revenue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SKU_Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SKU_Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SaleTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SaleId");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
+
+                    b.HasIndex("EmployeeStoreUserId", "EmployeeStoreStoreId");
+
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("NaplexAPI.Models.Entities.SKU", b =>
@@ -260,69 +319,13 @@ namespace NaplexAPI.Migrations
                     b.ToTable("SKUs", (string)null);
                 });
 
-            modelBuilder.Entity("NaplexAPI.Models.Entities.Sale", b =>
-                {
-                    b.Property<int>("SaleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleId"));
-
-                    b.Property<int>("EmployeeStoreStoreId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeStoreUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsAdditional")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDiscounted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrderType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("SKU")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SKU_Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SKU_Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SaleDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("SaleTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SaleId");
-
-                    b.HasIndex("EmployeeStoreUserId", "EmployeeStoreStoreId");
-
-                    b.ToTable("Sales");
-                });
-
             modelBuilder.Entity("NaplexAPI.Models.Entities.Store", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("StoreName")
                         .HasColumnType("nvarchar(max)");
@@ -338,7 +341,7 @@ namespace NaplexAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TargetId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TargetId"), 1L, 1);
 
                     b.Property<int>("AdditionalAct")
                         .HasColumnType("int");

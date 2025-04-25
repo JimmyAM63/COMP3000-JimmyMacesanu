@@ -70,6 +70,8 @@ namespace NaplexAPI.Services
             if (user == null)
                 throw new ApplicationException("User not found");
 
+            var roles = await _userManager.GetRolesAsync(user);
+
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
@@ -80,7 +82,8 @@ namespace NaplexAPI.Services
                 LastName= user.LastName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Address = user.Address
+                Address = user.Address,
+                Role = roles.FirstOrDefault()
             };
         }
 
