@@ -30,13 +30,13 @@ The frontend provides:
 
 ## 🛠️ Technology Stack
 
-| Layer        | Technology                     |
-|--------------|---------------------------------|
-| Frontend     | Angular 16                      |
-| Backend      | ASP.NET Core Web API (.NET 6)    |
+| Layer        | Technology                        |
+|--------------|-----------------------------------|
+| Frontend     | Angular 17                        |
+| Backend      | ASP.NET Core Web API (.NET 6)     |
 | Database     | Microsoft SQL Server 2022 Express |
-| Hosting      | Linux VPS (self-managed)         |
-| Domain & SSL | Configured for secure access     |
+| Hosting      | Linux VPS (self-managed)          |
+| Domain & SSL | Configured for secure access      |
 
 ---
 
