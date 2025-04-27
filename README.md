@@ -13,7 +13,7 @@ This project is a **Retail Store Staff and Sales Management Web Application**, d
 The system consists of two main parts:
 
 - **Backend API**: ASP.NET Core Web API (.NET 6)
-- **Frontend**: Angular 16 (separated from backend for better scalability)
+- **Frontend**: Angular 17 (separated from backend for better scalability)
 
 The backend handles:
 - Staff management
