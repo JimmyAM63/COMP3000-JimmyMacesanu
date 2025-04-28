@@ -63,8 +63,9 @@ namespace NaplexAPI.Controllers
             var claims = new List<Claim>
             {
                 new Claim("username", user.UserName), // Username claim
-                new Claim(ClaimTypes.Name, user.FirstName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)  // IMPORTANT: User ID claim
+                new Claim(ClaimTypes.Name, user.FirstName ?? ""),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),  // IMPORTANT: User ID claim
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.FirstName ?? "")
             };
 
             foreach (var role in roles)

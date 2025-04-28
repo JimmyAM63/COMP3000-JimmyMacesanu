@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NaplexAPI.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f6194703f66a7f62aed107a9bd4599fbe05121b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08ea58bfd76fa8e2493507f718028c919320c41d")]
 [assembly: System.Reflection.AssemblyProductAttribute("NaplexAPI.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NaplexAPI.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
